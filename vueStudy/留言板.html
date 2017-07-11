@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>留言板</title>
+	</head>
+	<style type="text/css">
+		table{
+			width: 500px;
+			border-collapse: collapse;
+			text-align: center;
+		}
+		button{
+			border: 0;
+			background: #eee;
+			display: inline-block;
+			height:100%;
+			
+		}
+		td{
+			/*padding: 5px 0;*/
+		}
+		input{
+			width:500px;
+			height:30px;
+			outline: 0 none;
+		}
+		.i{
+			margin: 5px 0;
+		}
+		#add{
+			width:200px;
+			height:30px;
+			margin-bottom: 20px;
+		}
+	</style>
+	<body>
+		<div id="box">
+			<div class="i">
+				<label for="#user">用户：</label>
+				<input type="text" id="user" value=""  v-model="name"/>
+			</div>
+			<div class="i">
+				<label for="#age">年龄：</label>
+				<input type="text" id="age" value=""  v-model="age"/>
+			</div>	
+			<div class="i">
+				<label for="#sex">性别：</label>
+				<input type="text" id="sex" value=""  v-model="sex"/>
+			</div>	
+			<br />
+			<button @click='add()' id="add">添加</button>
+			<br />
+			<table border="1" cellspacing="0" cellpadding="0">
+				<caption>用户信息表</caption>
+				<tr>
+					<th>序号</th>
+					<th>姓名</th>
+					<th>年龄</th>
+					<th>性别</th>
+					<th>操作</th>
+					
+				</tr>
+				<tr v-for="(item,index) in mydata">
+					<td>{{index+1}}</td>
+					<td>{{item.name}}</td>
+					<td>{{item.age}}</td>
+					<td>{{item.sex}}</td>
+					<td><button @click="nowindex=index,del()" :index='index' >删除</button></td>
+				</tr>
+				<tr>
+					<td colspan="5" v-show='mydata.length==0'>暂无数据....</td>
+				</tr>
+				<tr>
+					<td colspan="5" v-show='mydata.length!=0' @click="nowindex=-2,del()"><button>删除全部</button></td>
+				</tr>
+			</table>
+		</div>
+		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/vue-resource.js"></script>
+		<script type="text/javascript">
+			var vm=new Vue({
+				el:'#box',
+				data:{
+					mydata:[],
+					name:'',
+					age:'',
+					sex:'',
+					nowindex:-10
+				},
+				methods:{
+					add:function(){
+//						if(!this.name||!this.age||!this.sex){
+//							return;//如果输入框没内容则不执行函数
+//						}
+						this.mydata.push({
+							name:this.name,
+							age:this.age,
+							sex:this.sex
+						});
+						this.name='';
+						this.age='';
+						this.sex='';
+					},
+					delall:function(){
+						
+					},
+					del:function(){
+						if(this.nowindex==-2){
+							this.mydata=[];
+						}
+						this.mydata.splice(this.nowindex,1)
+					}
+					
+				}
+				
+			})
+		</script>
+	</body>
+</html>

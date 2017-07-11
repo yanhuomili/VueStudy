@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>vue学习</title>
+		<style type="text/css">
+			
+		</style>
+		<script type="text/javascript" src="js/vue.js"></script>
+	</head>
+	<body>
+		<div class="box">
+			<test-div v-for="(item,index) in co" :score="item" @add="change"></test-div>
+			<!--<test-div :score="75"></test-div>
+			<test-div :score="85"></test-div>
+			<test-div :score="95"></test-div>-->
+			<outer-div :from-fater="giveSon"><outer-div>	
+		</div>
+		<!--<script type="text/ecmascript" id="out">
+			<div>
+				<div>这是父组件中的数据{{fromFater}}</div>
+				<p>这是子组件中的数据{{outerNum}}</p>
+			</div>
+			
+		</script>-->
+		
+		<script type="text/javascript">
+		
+			/*
+			 组件中的数据传递是依靠props属性来实现的,
+			 组件中计算属性是一个函数，在 函数里面必须要有返回值，在组件中使用计算属性时，
+			 是直接将计算属性这个函数放到组件中。
+			 */
+			Vue.component('test-div',{
+				props:['score'],
+				template:'<div @click="add">您的成绩是：{{score}}分；{{testResult}}</div>',
+				computed:{
+					testResult:function(){
+						var comment="";
+						if(this.score<60){
+							comment='不及格';
+						}else if(this.score<80){
+							comment="仍需努力"
+						}else if(this.score<90){
+							comment='优秀';
+						}else if(this.score<100){
+							comment='非常优秀';
+						}else{
+							comment='你最棒了!'
+						}
+						return comment;
+					}
+				},
+				methods:{
+					add:function(){//触发这个事件，父组件能监听到
+						console.log('让父组件的数据改变');
+						this.$emit('add');//让父组件监听该函数的执行
+					}
+				}
+			});
+			
+			Vue.component('outer-div',{
+				props:['fromFater'],
+				template:'<div><div>这是父组件中的数据{{fromFater}}</div><p>这是子组件中的数据{{outerNum}}</p></div>',
+				data:function(){
+					return {
+						outerNum:100
+					}
+				}
+				
+			})
+		
+			var vm=new Vue({
+				el:'.box',
+				data:{
+					sex:"",
+					hobby:"",
+					co:[50,75,85,95,100],
+					giveSon:200
+				},
+				methods:{
+					change:function(){//监听子组件的函数
+						this.co.push(100);
+					}
+				}
+			})
+			
+
+
+		</script>
+	</body>
+</html>
+
+

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			
+		</style>
+	</head>
+	<body>
+		<scroll-view scroll-y="true" style="height:300px;" bindscrolltoupper="scrollTop" bindscrolltolower="scrollBot">
+			<view class="scroll-view-item v1">1</view>
+			<view class="scroll-view-item v1">2</view>
+			<view class="scroll-view-item v1">3</view>
+			<view class="scroll-view-item v1">4</view>
+		</scroll-view >
+	</body>
+	
+	<script type="text/javascript">
+		scrollTop:function(ev){
+			console.log(ev);
+		},
+		scrollBot:function(ev){
+			console.log(ev)
+		}
+		
+	</script>
+</html>

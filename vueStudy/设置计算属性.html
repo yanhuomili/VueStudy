@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>vue学习</title>
+		<style type="text/css">
+		
+		</style>
+		<script type="text/javascript" src="js/vue.js"></script>
+	</head>
+	<body>
+		<div id="box">
+			<p @click="change">{{msg}}</p>
+			<p @click="change1">{{num1}}</p>
+			<p @click="change2">{{num2}}</p>
+			<input type="text" name="" id="" value="" />
+			<button @click="change1()">点击改变积</button>
+			<button @click="change2(4)">点击改变商</button>
+		</div>
+		<script type="text/javascript">
+			
+			/*
+			计算属性:用于一些数据的简单运算，在computed属性里面写方法来处理数据，因为方法执行后得到
+			的是返回值，所以该方法可以像渲染数据一样直接当做数据渲染到页面中。计算属性里面的数据始终依赖
+			模板中的数据，并且跟着模板中的数据而改变。
+			
+			设置计算属性：使计算属性的逆推，将要设置的那个属性的运算逆推算出模板的数据。
+			 * 
+			 * */
+		
+			//初始化根实例
+			var vm=new Vue({
+				el:'#box',
+				components:{
+					
+				},
+				data:{
+					msg:10,
+				},
+				methods:{
+					change:function(){
+						this.msg+=10;
+					},
+					change1:function(){
+						var ipt=document.getElementsByTagName('input')[0];
+						val=ipt.value;
+						this.num1=val;
+					},
+					change2:function(val){
+						this.num2=val;
+					}
+				},
+				computed:{
+					num1:{
+						get:function(){
+							return this.msg1=this.msg*2;
+						},
+						set:function(val){
+							this.msg=val/2;
+						}
+					},
+					num2:{
+						get:function(){
+							return this.msg2=this.msg/2;
+						},
+						set:function(val){
+							this.msg=val*2;
+						}
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

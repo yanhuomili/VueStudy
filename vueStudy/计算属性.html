@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>vue学习</title>
+		<style type="text/css">
+		
+		</style>
+		<script type="text/javascript" src="js/vue.js"></script>
+	</head>
+	<body>
+		<div id="box">
+			<p @click="change">{{msg}}</p>
+			<p>{{cheng2}}</p>
+			<p>{{chu2}}</p>
+			
+		</div>
+		<script type="text/javascript">
+			
+			/*
+			计算属性:用于一些数据的简单运算，在computed属性里面写方法来处理数据，因为方法执行后得到
+			的是返回值，所以该方法可以像渲染数据一样直接当做数据渲染到页面中。计算属性里面的数据始终依赖
+			模板中的数据，并且跟着模板中的数据而改变。
+			 * 
+			 * */
+		
+			//初始化根实例
+			var vm=new Vue({
+				el:'#box',
+				components:{
+					
+				},
+				data:{
+					msg:10,
+				},
+				methods:{
+					change:function(){
+						this.msg=20;
+					}
+				},
+				computed:{
+					cheng2:function(){
+						return this.msg1=this.msg*2;
+					},
+					chu2:function(){
+						return this.msg2=this.msg/2;
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>vue学习</title>
+		<style type="text/css">
+			
+		</style>
+		<script type="text/javascript" src="js/vue.js"></script>
+	</head>
+	<body>
+		<div class="box">
+			
+			
+			<input type="radio" name="" id="d1" value="男" v-model="sex"/>
+			<label for="d1">男</label>
+
+			<input type="radio" name="" id="d2" value="女" v-model="sex"/>
+			<label for="d2">女</label>
+<hr />
+			<input type="radio" name="" id="d3" value="篮球" v-model="hobby"/>
+			<label for="d3">篮球</label>
+
+			<input type="radio" name="" id="d3" value="羽毛球" v-model="hobby"/>
+			<label for="d4">羽毛球</label>
+<hr />
+			<p>您选择的性别是：{{sex}}</p>
+			<p>您选择的爱好是：{{hobby}}</p>
+		</div>
+			
+		
+		
+		<script type="text/javascript">
+		
+			/*父组件可以在使用子组件的地方直接用 v-on 来监听子组件触发的事件
+			 在调用子组件的地方可以监听子组件出发了事件，从而让父组件作出相应的响应。
+			 
+			 */
+			
+		
+			var vm=new Vue({
+				el:'.box',
+				data:{
+					sex:"",
+					hobby:""
+				},
+			
+			})
+			
+
+
+
+		</script>
+	</body>
+</html>
+
+

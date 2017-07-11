@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>vue学习</title>
+		<style type="text/css">
+			
+		</style>
+		<script type="text/javascript" src="js/vue.js"></script>
+	</head>
+	<body>
+		<div class="box">
+			<h3>用户注册</h3>
+			<label for="user">用户</label>
+			<input type="text" name="" id="user"  v-model.lazy="user" @change="checkuser"/>
+			<span v-if="isok">用户可注册</span>
+			<br />
+			<label for="age">女</label>
+			<input type="text" name="" id="age"  v-model.number="age"/>
+			<br />
+			<label for="info">信息</label>
+			<input type="text" name="" id="info"  v-model="info"/>
+			
+<hr />
+			
+			<h3>信息区</h3>
+			<p>用户：{{user}}</p>
+			<p>年龄：{{age}}</p>
+			<p>简介：{{info}}</p>
+		</div>
+			
+		
+		
+		<script type="text/javascript">
+		
+			/*
+			 .lazy 用户输入内容时不做数据绑定的更新，在控件的onchange事件中更新绑定的变量。
+			 .numbre 将用户输入的内容转换为数值类型，如果用户输入非数值的时候，返回NaN。
+			 .trim 自动去掉用户输入内容的两端的空格。
+			 
+			 */
+			
+		
+			var vm=new Vue({
+				el:'.box',
+				data:{
+					user:"",
+					age:"",
+					info:"",
+					isok:false
+				},
+				methods:{
+					checkuser:function(){
+						if(this.user.length>0){
+							this.isok=true;
+						}else{
+							this.isok=false;
+						}
+					}
+				}
+			
+			})
+			
+
+
+
+		</script>
+	</body>
+</html>
+
+

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>jsonp跨域仿百度搜索框</title>
+		<style type="text/css">
+			body,ul{
+				margin: 0;
+				padding: 0;
+			}
+			ul li{
+				list-style: none;
+			}
+		
+			#search{
+				width: 300px;
+				height:30px;
+				/*text-align: center;*/
+				line-height: 30px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<label for="search"></label>
+			<input type="text" name="search" id="search" value="" v-model="title"/>
+			<ul>
+				<li v-for="item in val">{{item}}</li>
+			</ul>
+			<button id="btn" @click="get()">提交</button>
+		</div>
+		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/vue-resource.js"></script>
+		<script type="text/javascript">
+			var vm=new Vue({
+				el:'#box',
+				data:{
+					a:1,
+					b:2,
+					title:'a',
+					val:['香蕉','苹果','雪梨','菠萝']
+				},
+				methods:{
+					get:function(){
+						this.$http.get('get.php',{
+							a:1,
+							b:2
+						},{
+							emulateJSON:true
+						}).then(function(res){
+							console.log(res.data)
+//							console.log(res.data)
+						},function(res){
+							console.log(res.status)
+						})
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

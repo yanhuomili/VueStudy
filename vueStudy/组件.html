@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>vue学习</title>
+		<style type="text/css">
+		
+		</style>
+		<script type="text/javascript" src="js/vue.js"></script>
+	</head>
+	<body>
+		<div id="box">
+			<input type="text" v-model="msg" />
+			<my-div v-bind:message='msg'></my-div>
+			<my-div v-bind:message='123'></my-div>
+			<my-div message='123'></my-div>
+			
+			
+		</div>
+		
+		<table border="1" cellspacing="" cellpadding="">
+			<tr is="my-tr"></tr>
+		</table>
+		
+		
+		
+		
+		
+		<script type="text/javascript">
+			//组件的注册：组件的注册必须在初始化根实例之前
+			//注册一个全局的组件：Vue.component(tagName, options)
+			/*子组件的两种创建方法:
+			1.Vue.component(tagName, options)
+			2.在父组件里面设置components:对象，在全局中创建template属性
+			3.在子组件中使用data的时候，data必须是函数，一般在全局总设置data，在子组件里面甚至data函数，在函数里面返回data。
+			4.由于一些标签的嵌套规则，在自定义组件中某些元素的使用会受到限制，变通的方案是使用特殊的 is 属性
+			5.应当注意，如果您使用来自以下来源之一的字符串模板，这些限制将不适用：
+				<script type="text/x-template">
+				JavaScript内联模版字符串
+				.vue 组件
+			6.在 Vue.js 中，父子组件的关系可以总结为 props down, events up 。父组件通过 props 向下传递数据给子组件，子组件通过 events 给父组件发送消息。	
+			7.v-bind的简写形式是:，v-on的简写形式是@
+			8.HTML 特性是不区分大小写的。所以，当使用的不是字符串模版，camelCased (驼峰式) 命名的 prop 需要转换为相对应的 kebab-case (短横线隔开式) 命名
+			
+			9.父组件可以在使用子组件的地方直接用 v-on 来监听子组件触发的事件
+			 在调用子组件的地方可以监听子组件出发了事件，从而让父组件作出相应的响应。
+			 
+			 
+			 
+			 */
+			
+			
+			
+			
+			//组件
+			var child={
+				template:'<h4>这是h4标签，随处可用</h4>'
+			}
+			var data={counter:1}
+			Vue.component('my-div',{//局部组件
+				props:['message'],
+				template:'<div v-on:click="counter+=1">{{message}}这是我的第一个组件{{counter}}</div>',
+				data:function(){
+//					return data;//这种情况下三个组件共享了一个data对象
+					return {//这种情况三个组件都有自己独立的data对象
+						counter:this.message
+					}
+				}
+			})
+			//初始化根实例
+			var vm=new Vue({
+				el:'#box',
+				components:{
+					
+				},
+				data:{
+					msg:'11111'
+				}
+			})
+
+
+			var tr={
+				template:'<tr>这是tr组件</tr>'
+			}
+			var vm1=new Vue({
+				el:'table',
+				data:{
+					
+				},
+				components:{
+					'my-tr':tr
+				}
+			})
+			
+			
+			
+
+
+
+		</script>
+	</body>
+</html>

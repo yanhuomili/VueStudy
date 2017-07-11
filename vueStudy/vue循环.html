@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>jsonp跨域仿百度搜索框</title>
+		<style type="text/css">
+			.active{
+				background: #333;
+				color: blue;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<input type="text" v-model='msg' />
+			<input type="text" v-model='msg' />
+			<input type="text" v-model='msg' />
+			<p>{{msg}}</p>
+			<h6>{{msg}}</h6>
+			<!--<ul>
+				<li v-for="(val,key,index) in json" @click="ind">{{key}}:{{index}}:{{val}}</li>
+			</ul>-->
+			<br />
+			<ul>
+				<li v-for="(item,index) in mydata" v-bind:class='{active:now==5}' >{{item}}-{{index}}</li>
+			</ul>
+			<button @click='add()'>添加</button>
+			<h1 v-if="age==20">20</h1>
+			<h1 v-if="age==22">22</h1>
+		</div>
+		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/vue-resource.js"></script>
+		<script type="text/javascript">
+		
+			/*
+			 1.data里面可以放数字，字符串，布尔值，数组，对象
+			 2.循环：①循环对象的时候里面有三个参数，第一个是属性值，第二个是属性名，第三个是索引，固定循序不能改变
+			 		②循环数组的时候里面可以有两个参数,第一个数值，第二个是索引
+			 3.当实例里面有template的时候，会把整个template渲染都作用域里面，在HTML里面写的东西会被覆盖掉。
+			 
+			  
+			 */
+			new Vue({
+				el:'#box',
+				data:{
+					a:'active',
+					mydata:[1,2,3,4,5,6,7,8,9],
+					json:{a:'apple',b:'banana',c:'orange',d:'pear'},
+					t1:'11111',
+					now:5,
+					msg:'welcome vue',
+					age:20,
+					arr:[10,11,12,13]
+					
+				},
+				methods:{
+					add:function(){
+						this.mydata.push('222')
+						console.log(this.now)
+					},
+					ind:function(index){
+						console.log(index)
+					},
+					test:function(){
+						return 123
+					},
+					init:function(){//初始化页面
+						this.mydata=[1,2,3,4,5];
+					}
+				},
+				beforeCreate:function(){//在这个阶段是读取不到vue里面的属性和方法，因为在这个阶段vue还没有实例化
+//					console.log('beforeCreate',this.now)
+				},
+				created:function(){//在这个阶段可以调用实例的数据和实例的方法，
+					//异步数据的请求、初始化页面适合在create阶段，
+					//但是挂在阶段还没有开始，el里面的属性还不可见，例如li的长度
+//					console.log('create',this.now,this.test())
+//					this.test();
+//					this.init();
+//					console.log(document.querySelectorAll('li').length)
+//					setTimeout(function(){
+//						return this.mydata=[1,2,3,4,5];
+//						console.log(document.querySelectorAll('li').length)
+//					})
+				},
+				beforeMount(){//这个阶段也读取不到li的长度
+//					console.log(document.querySelectorAll('li').length)
+				},
+				mounted(){//在这个阶段读取dom里面的数据就是正常的了，能读取dom里面的数据
+					
+					console.log(document.querySelectorAll('li').length)
+				},
+				beforeUpdate(){
+						
+					
+					console.log(document.querySelectorAll('li').length)
+				},
+				updated(){
+//					this.mydata=[1,2,3,4,5];
+					console.log(document.querySelectorAll('li').length)
+				}
+			})
+		</script>
+	</body>
+</html>
+
+

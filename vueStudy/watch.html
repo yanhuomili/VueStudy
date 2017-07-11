@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>vue学习</title>
+		<style type="text/css">
+		
+		</style>
+		<script type="text/javascript" src="js/vue.js"></script>
+	</head>
+	<body>
+		<div id="box">
+			<p @click="change">{{msg}}</p>
+			<p>{{msg1}}</p>
+			<p>{{msg2}}</p>
+			
+		</div>
+		<script type="text/javascript">
+			
+			/*
+			watch事件类似于onchange事件：当我们的vue初始化之后，在全局中设置一个初始值。
+			要观察data里面的那个属性的变化，watch里面的方法名就要要跟data里面的那个属性名一样。
+			 * 
+			 * */
+		
+			//初始化根实例
+			var vm=new Vue({
+				el:'#box',
+				components:{
+					
+				},
+				data:{
+					msg:0,
+					msg1:0,
+					msg2:0,
+				},
+				methods:{
+					change:function(){
+						this.msg+=10;
+					}
+				},
+				watch:{
+					msg:function(newval,oldval){
+						console.log(newval,oldval)
+						this.msg1=this.msg*2;
+						this.msg2=this.msg/2;
+					}
+				}
+			})
+			vm.msg=200;
+		</script>
+	</body>
+</html>

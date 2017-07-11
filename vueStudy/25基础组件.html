@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>vue学习</title>
+		<style type="text/css">
+			
+		</style>
+		<script type="text/javascript" src="js/vue.js"></script>
+	</head>
+	<body>
+		<div class="box">
+			<table border="1" cellspacing="0" cellpadding="0">
+				<tr><th>表头</th></tr>
+				<tr is="tody-do"></tr>
+				<tr is="tody-do"></tr>
+				<tr is="tody-do"></tr>
+			</table>
+		</div>
+			
+		
+		
+		<script type="text/javascript">
+		
+			/*
+			 组件的嵌套要遵循一定的规则，使用is属性
+			 */
+			Vue.component('tody-do',{
+				template:'<tr><td>今天天气很好，出去放飞心情</td></tr>'
+			});
+		
+			var vm=new Vue({
+				el:'.box',
+				data:{
+					sex:"",
+					hobby:""
+				},
+			
+			})
+			
+
+
+
+		</script>
+	</body>
+</html>
+
+

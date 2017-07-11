@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>vue学习</title>
+		<style type="text/css">
+			p{
+				width:100px;
+				height:20px;
+				border: 1px solid red;
+			}
+		</style>
+		<script type="text/javascript" src="js/vue.js"></script>
+	</head>
+	<body>
+		<div class="increment">
+			<p>{{total}}</p>
+			<new-button1 v-on:increase="increaseTotal"></new-button1>
+			<new-button2 v-on:decrease="decreaseTotal"></new-button2>
+		</div>
+		
+		
+		
+		
+		
+		
+		<script type="text/javascript">
+		
+			/*父组件可以在使用子组件的地方直接用 v-on 来监听子组件触发的事件
+			 在调用子组件的地方可以监听子组件出发了事件，从而让父组件作出相应的响应。
+			 
+			 
+			 */
+			
+			Vue.component('new-button1',{
+				template:'<button v-on:click="increase">{{counter}}</button>',
+				data:function(){
+					return {
+						counter:0
+					}
+				},
+				methods:{
+					increase:function(){
+						this.counter+=1;
+						this.$emit('increase');
+					}
+				}
+			})
+			Vue.component('new-button2',{
+				template:'<button v-on:click="decrease">{{counter}}</button>',
+				data:function(){
+					return {
+						counter:0
+					}
+				},
+				methods:{
+					decrease:function(){
+						this.counter-=1;
+						this.$emit('decrease');
+					}
+				}
+			})
+			
+			var vm=new Vue({
+				el:'.increment',
+				data:{
+					total:0
+				},
+				methods:{
+					increaseTotal:function(){
+						this.total+=1;
+					},
+					decreaseTotal:function(){
+						this.total-=1;
+					}
+				}
+			})
+			
+
+
+
+		</script>
+	</body>
+</html>
+

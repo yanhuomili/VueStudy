@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>vue学习</title>
+		<style type="text/css">
+			.box{
+				width:300px;
+				height:100px;
+				background: #ccc;
+				overflow: hidden;
+			}
+			p{
+				height:20px;
+				line-height: 20px;
+				color: red;
+			}
+			.bor{
+				border: 2px solid blue;
+			}
+			.box1{
+				width:200px;
+				height:200px;
+				background: #0000FF;
+			}
+			p{
+				width:100%;
+				height:30px;
+				background: plum;
+			}
+			input{
+				width:200px;
+				height:50px;
+				border: 1px solid #ccc;
+			}
+			.con{
+				background: #f60;
+			}
+			h2{
+				height:30px;
+				line-height: 30px;
+				color: #f60;
+			}
+		</style>
+		<script type="text/javascript" src="js/vue.js"></script>
+	</head>
+	<body>
+		<div class="box" @click="fn1">{{msg.split('').reverse().join('')}}</div>
+		<div class="box1" @click="fn1"></div>
+		<p id="p" v-if='show'>pppppppppp</p>
+		<div class="con" >
+			<h4>{{msg}}</h4>
+			<button v-on:click="fn">点击一下</button>
+			<input type="text" name="ipt1" id="ipt2" value="" />
+		</div>
+			
+		
+		<div id="box2">
+			{{vv}}
+		</div>
+		<ul class="ul">
+			<li v-for='x in arr'>
+				{{x.t}}
+			</li>
+		</ul>
+		
+		<div class="box4">
+			<p>{{msg}}</p>
+			<button v-on:click="fn">点击</button>
+		</div>
+		
+		
+		<div class="box5">
+			<input type="text" name="bt" id="bt" value="" v-model="msg"/>
+			<h2>{{msg}}</h2>
+		</div>
+		
+		<div id="app-7">
+		  <ol>
+		    <!-- 现在我们为每个todo-item提供待办项对象    -->
+		    <!-- 待办项对象是变量，即其内容可以是动态的 -->
+		    <todo-item v-for="x in groceryList" v-bind:todo="x"></todo-item>
+		  </ol>
+		</div>
+		
+		
+		
+		
+		<script type="text/javascript">
+			
+			var v=new Vue({
+				el:'.box',
+				data:{
+					msg:"123456789",
+					myhtml:'<p>这是渲染的p标签</p>'
+				},
+				methods:{
+					fn1:function(){
+						var box=document.getElementsByClassName('box')[0];
+						alert('123')
+						box.innerHTML+=this.myhtml
+					},
+					fn2:function(){
+						var box=document.getElementsByClassName('box')[0];
+						box.className='box bor';
+					}
+				}
+				
+			})
+			var v=new Vue({
+				el:'.box1',
+				data:{
+					msg:"hhhhhh",
+					myhtml:'<p>第二个vue</p>'
+				},
+				methods:{
+					fn1:function(){
+						var box1=document.getElementsByClassName('box')[0];
+						alert('123')
+						box1.innerHTML+=this.myhtml
+					},
+					fn2:function(){
+						var box1=document.getElementsByClassName('box1')[0];
+						box1.className='box bor';
+					}
+				}
+				
+			})
+			var v=new Vue({
+				el:'#p',
+				data:{
+					show:true
+				}
+			})	
+		
+			
+			
+			var v=new Vue({
+				el:'.box5',
+				data:{
+					msg:'请输入内容'
+				},
+				methods:{
+					fn:function(){
+						alert(123)
+						var ipt2=document.getElementById('ipt2');
+						var h4=document.getElementsByTagName('h4')[0];
+						this.msg=ipt2.value
+					}
+				}
+			})
+			
+			
+			
+			
+			var arr1=[{t:'11111'},{t:'22222'},{t:'33333'},{t:'44444'},{t:'5555'}]
+			var v3=new Vue({
+				el:'.ul',
+				data:{
+					arr:arr1
+				}
+			})
+			var v=new Vue({
+				el:'.box4',
+				data:{
+					msg:'爱我中华'
+				},
+				methods:{
+					fn:function(){
+						var ipt2=document.getElementById('ipt2');
+						this.msg=ipt2.value
+					}
+				}
+			})
+			
+
+			var v=new Vue({
+				el:'.con',
+				data:{
+					msg:'sdfs'
+				},
+				methods:{
+					fn:function(){
+						alert(123)
+						var ipt2=document.getElementById('ipt2');
+						var h4=document.getElementsByTagName('h4')[0];
+						this.msg=ipt2.value
+					}
+				}
+			})
+			
+			
+			Vue.component('todo-item', {
+			  props: ['todo'],
+			  template: '<li @click="al">{{todo}}</li>',
+			  methods:{
+			  	al:function(){
+			  		alert(this.props)
+			  	}
+			  }
+			})
+			var app7 = new Vue({
+			  el: '#app-7',
+			  data: {
+			    groceryList: {a:'11',b:'22',c:'33',d:'44'}
+			  }
+			})
+			
+		</script>
+	</body>
+</html>

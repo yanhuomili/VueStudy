@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>vue学习</title>
+		<style type="text/css">
+			
+		</style>
+		<script type="text/javascript" src="js/vue.js"></script>
+	</head>
+	<body>
+		<div class="box">
+			<span>付款：<input type="text" v-model='money'/></span>
+			<new-div :pmoney='money'></new-div><!--pname接受父组件中money这个变量-->
+				
+		</div>
+		<script type="text/javascript">
+		
+			/*
+			 组件中的数据传递是依靠props属性来实现的,
+			 组件中计算属性是一个函数，在 函数里面必须要有返回值，在组件中使用计算属性时，
+			 是直接将计算属性这个函数放到组件中。
+			 
+			 */
+			Vue.component('new-div',{
+				props:['pmoney'],
+				template:'<div>您本次的消费是：{{pmoney}}元</div>',
+			})
+		
+			var vm=new Vue({
+				el:'.box',
+				data:{
+					money:300,
+				},
+			})
+			
+
+
+		</script>
+	</body>
+</html>
+
+

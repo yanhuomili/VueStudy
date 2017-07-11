@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>jsonp跨域仿百度搜索框</title>
+		<style type="text/css">
+			body,ul{
+				margin: 0;
+				padding: 0;
+			}
+			ul li{
+				list-style: none;
+			}
+			#search{
+				width: 300px;
+				height:30px;
+				/*text-align: center;*/
+				line-height: 30px;
+			}
+			p{
+				background: #ccc;
+			}
+			.active{
+				background: red;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<input type="text" name="btn" id="btn" v-model='t1' @keydown='changeDown()'/>
+			<ul>
+				<li v-for="val in mydata" :class="{active:index==now}">{{val}}</li>
+			</ul>
+			<p v-show="this.mydata.length==0">暂无数据。。。。</p>
+			
+			<button id="btn" @click="get()">提交</button>
+		</div>
+		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/vue-resource.js"></script>
+		<script type="text/javascript">
+			new Vue({
+				el:'#box',
+				data:{
+					mydata:[1,2,3,4,5,6,7,8,9],
+					t1:'',
+					now:-1
+				},
+				methods:{
+					get:function(){
+						this.$http.jsonp('https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',{
+							wd:this.t1
+						},{
+							jsonp:'cb'
+						}).then(function(res){
+							this.mydata=res.data.s;
+						},function(res){
+							console.log(res.status)
+						})
+					},
+					changeDown:function(){
+						this.now++;
+						console.log(this.now)
+					}
+					
+				}
+			})
+		</script>
+	</body>
+</html>
+

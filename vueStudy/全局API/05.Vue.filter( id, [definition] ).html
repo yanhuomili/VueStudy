@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Vue.filter( id, [definition] )</title>
+		<style type="text/css">
+			
+		</style>
+		<script type="text/javascript" src="../js/vue.js"></script>
+		<script type="text/javascript" src="../js/jquery-3.1.1.min.js"></script>
+		
+	</head>
+	<body>
+		<div class="container" id="box">
+			<ul>
+				<li v-for="(item,index) in arr" @click="change(index)">{{index}}:{{item}}</li>
+			</ul>	
+			<p>{{total|sum}}</p>
+			<div>{{letter|toUpper}}</div>
+		</div>
+		
+		<script type="text/javascript">
+		
+			/*
+			过滤器的使用
+			 */
+			
+			//金额处理过滤器
+			Vue.filter('sum',function(value){
+				return '￥'+value.toFixed(3)+'元';
+			})
+			//字母处理过滤器,将首字母转成大写
+			Vue.filter('toUpper',function(value){
+				return value.substring(0,1).toLocaleUpperCase()+value.substring(1);
+			})
+			
+			var vm=new Vue({
+				el:'.container',
+				data:{
+					arr:['apple','pear','banana','orange'],
+					total:100,
+					letter:'abcde'
+				}
+			})
+			
+			
+			
+
+		</script>
+	</body>
+</html>
+
+
+

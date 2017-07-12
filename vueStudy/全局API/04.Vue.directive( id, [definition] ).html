@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Vue.directive( id, [definition] )</title>
+		<style type="text/css">
+			
+		</style>
+		<script type="text/javascript" src="../js/vue.js"></script>
+		<script type="text/javascript" src="../js/jquery-3.1.1.min.js"></script>
+		
+	</head>
+	<body>
+		<div class="container" id="box">
+			<ul>
+				<li v-first="name" v-for="(item,index) in arr" @click="change(index)">{{index}}:{{item}}</li>
+				<input v-focus type="text" name="" id="" value="" />
+			</ul>	
+			<div v-color="red" v-show="bind==true">测试局部指令是否生效</div>
+		</div>
+		
+		<script type="text/javascript">
+		
+			/*
+			自定义指令
+			 */
+			
+			//注册一个获取焦点的指令
+			Vue.directive('focus', {
+			  // 当绑定元素插入到 DOM 中。
+			  inserted: function (el) {
+			    // 聚焦元素
+			    el.focus()
+			  }
+			})
+			
+			
+			//注册指令
+			Vue.directive('first',{
+				bind:function(){//指令绑定到元素时调用一次，可以绑定一个初始化的动作
+					console.log('注册了一个')
+				},
+				inserted:function(el,binding,vnode){//被绑定元素插入父节点时调用
+					console.log($(el).text())	
+					console.log(binding.name,binding.value,vnode)
+					console.log(vnode)
+				},
+				update:function(el,binding){//被绑定元素所在的模板更新是调用
+					console.log(binding.oldValue,binding.newValue)
+				},
+				componentUpdate:function(){//被绑定元素所在的模板完成一次更新周期时调用
+					console.log('注册了一个指令')
+				},
+				unbind:function(){//只调用一次，指令与元素解绑是调用
+					console.log('注册了一个指令')
+				}
+			})
+			
+			//向指令传入一个函数
+			Vue.directive(function(){
+				console.log('不清楚')
+			})
+			
+			//getter,返回已注册的指令,获取到指令
+			var get=Vue.directive('first');
+			console.log(get);
+			
+			var vm=new Vue({
+				el:'.container',
+				data:{
+					arr:['apple','pear','banana','orange'],
+					name:true,
+					red:'red',
+					bind:true
+				},
+				methods:{
+					change:function(){
+						this.$set(this.arr,3,'fruit2');//在这里使用局部API去改变数组的值
+						Vue.set(vm.arr,1,'fruit1');//在全局中的设置也可以放到这里来执行
+						this.name=false;
+					}
+				},
+				directives:{//注册局部指令
+					color:function(el,binding){
+						$(el).css({'color':'red'});
+						console.log(binding.value);//元素所在的模板更新是执行该代码
+					}
+				}
+			})
+			
+			
+			
+
+		</script>
+	</body>
+</html>
+
+
+

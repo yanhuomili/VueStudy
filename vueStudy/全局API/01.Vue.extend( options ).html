@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Vue.extend( options )</title>
+		<style type="text/css">
+			
+		</style>
+		<script type="text/javascript" src="../js/vue.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<div class="box"></div>
+			<ul>
+				<li v-for="(item,index) in arr" @click="change">{{index}}:{{item}}</li>
+			</ul>	
+		</div>
+		
+		<script type="text/javascript">
+		
+			/*
+			 使用基础Vue构造器，创建一个子类;
+			 基础构造器构造出来的实例，相当于一个子组件一样，实例化之后可以像子组件一样放到一个实例下面
+			 */
+			//创建构造器
+			var Profile=Vue.extend({
+				template:'<p>{{msg}}:{{num}}</p>',
+				data:function(){
+					return {
+						msg:'这是构建出来的子类中的data数据',
+						num:1
+					}
+				}
+			})
+			//创建Profile，并挂载到一个元素上
+			var create=new Profile();
+			create.$mount('.box');
+			var vm=new Vue({
+				el:'.container',
+				data:{
+					arr:['apple','banana','orange','pear']
+				},
+				methods:{
+					change:function(){
+						create.msg='123';
+						console.log(create.msg);
+						console.log(123)
+					}
+				}
+			})
+
+		</script>
+	</body>
+</html>
+
+
+

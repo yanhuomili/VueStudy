@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Vue.nextTick( [callback, context] )</title>
+		<style type="text/css">
+			
+		</style>
+		<script type="text/javascript" src="../js/vue.js"></script>
+		<script type="text/javascript" src="../js/jquery-3.1.1.min.js"></script>
+		
+	</head>
+	<body>
+		<div class="container">
+			<ul>
+				<li v-for="(item,index) in arr" @click="change(index)">{{index}}:{{item}}</li>
+			</ul>	
+		</div>
+		
+		<script type="text/javascript">
+		
+			/*
+			在下次dom跟新循环之后执行延迟回调，在修改数据之后立即执行这个方法获取更新后的dom。
+			这个api不太理解
+			 */
+			
+			var vm=new Vue({
+				el:'.container',
+				data:{
+					arr:['apple','banana','orange','pear']
+				},
+				methods:{
+					change:function(index){
+						
+						this.arr[index]='abc';
+						this.$forceUpdate();
+						this.$nextTick(function(){//获取更新后的dom元素
+							console.log($('.container').text());
+						})
+					}
+				}
+			})
+			Vue.nextTick(function(){//页面进来就执行
+				var Text=$('.container').text();
+				console.log(Text);
+			})
+
+		</script>
+	</body>
+</html>
+
+
+

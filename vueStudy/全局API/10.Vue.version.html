@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Vue.version</title>
+		<style type="text/css">
+			
+		</style>
+		<script type="text/javascript" src="../js/vue.js"></script>
+		<script type="text/javascript" src="../js/jquery-3.1.1.min.js"></script>
+		
+	</head>
+	<body>
+		<div class="container">
+			<p>{{a}}</p>
+			<p>{{b}}</p>
+			<button @click="change">点击</button>
+		</div>
+			
+		<script type="text/javascript">
+			/*
+			 * 
+			 */
+			
+			var data={a:'a',b:'b'};
+			//实例化Vue
+			var vm=new Vue({
+				el:'.container',
+				data:data,
+				methods:{
+					change:function(){
+//						this.a='a';
+						vm.$data.a='bb';
+						console.log(this.a);
+						console.log(vm.a);
+						console.log(vm.$data.a);
+					}
+				}
+			})
+			console.log(vm.a);
+			console.log(vm.$data.a);//获取原始数据对象的属性
+			
+			检测Vue.js的版本
+			var version=Number(Vue.version.split('.')[0]);
+			if(version==2){
+				console.log(2);
+			}else if(version==1){
+				console.log(1);
+			}else{
+				console.log(1);
+			}
+			
+
+		</script>
+	</body>
+</html>
+
+
+

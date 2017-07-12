@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Vue.set( target, key, value )</title>
+		<style type="text/css">
+			
+		</style>
+		<script type="text/javascript" src="../js/vue.js"></script>
+		<script type="text/javascript" src="../js/jquery-3.1.1.min.js"></script>
+		
+	</head>
+	<body>
+		<div class="container">
+			<ul>
+				<li v-for="(item,index) in arr" @click="change(index)">{{index}}:{{item}}</li>
+			</ul>	
+		</div>
+		
+		<script type="text/javascript">
+		
+			/*
+			设置对象的属性，用于改变数组或对象中的值，修改后dom会重新渲染，
+			设置对象的属性。如果对象是响应式的，确保属性被创建后也是响应式的，同时触发视图更新。这个方法主要用于避开 Vue 不能检测属性被添加的限制。
+			 */
+			
+			var vm=new Vue({
+				el:'.container',
+				data:{
+					arr:['apple','pear','banana','orange']
+				},
+				methods:{
+					change:function(){
+						this.$set(this.arr,3,'fruit2');//在这里使用局部API去改变数组的值
+						Vue.set(vm.arr,1,'fruit1');//在全局中的设置也可以放到这里来执行
+					}
+				}
+			})
+			Vue.set(vm.arr,0,'fruit1');//在这里指定个话是页面一进来就渲染
+
+		</script>
+	</body>
+</html>
+
+
+

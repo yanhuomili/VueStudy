@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Vue.filter( id, [definition] )</title>
+		<style type="text/css">
+			
+		</style>
+		<script type="text/javascript" src="../js/vue.js"></script>
+		<script type="text/javascript" src="../js/jquery-3.1.1.min.js"></script>
+		
+	</head>
+	<body>
+		<div class="container">
+			<ul>
+				<li v-for="(item,index) in arr" @click="change(index)">{{index}}:{{item}}</li>
+			</ul>	
+			<new-p :reserve="total"></new-p>
+			<br />
+			<new-script :receive="letter"></new-script>
+			<br />	
+			<new-extend :accept="total"></new-extend>
+		</div>
+		
+		<!--使用这种形式的模板时，要在里面套上一层盒子来做模板的父级-->
+		<script type="text/x-template" id="box">
+			<div>
+				<p>来自父组件的数据：{{receive}},来自子组件本身的数据：{{user}}</p>
+				<p>来自子组件本身的数据{{age}}</p>
+			</div>
+		</script>
+		
+		<script type="text/template" id="extend"> 
+			<div>
+				<h3>这是来自父组件的数据：{{accept}}，这是来自子组件自身的数据:{{value}}</h3>
+				<h3>这是来自父组件的数据：{{accept}}，这是来自子组件自身的数据:{{value}}</h3>
+			</div>
+		</script>
+			
+			
+			
+		<script type="text/javascript">
+			/*
+			全局组件的使用，组件的注册有三种形式，使用第三种形式注册子组件的时候，要在模板里面套上一个父元素
+			 */
+			
+			//1.这种方法注册的组件拓展性很差
+			Vue.component('new-p',{
+				props:['reserve'],
+				template:'<p>来自子组件的数据:{{msg}},来自父组件的数据:{{reserve}}</p>',
+				data:function(){
+					return {
+						msg:'children'
+					}
+				}
+			})
+			
+			//2.这种方法注册的组件拓展性一般
+			Vue.component('new-script',{
+				props:['receive'],
+				template:'#box',
+				data:function(){
+					return {
+						user:'lili',
+						age:22
+					}
+				}
+			})
+			
+			//3.1这种方法注册的组件的拓展性很强
+//			Vue.component('new-extend',Vue.extend({
+//				props:['accept'],
+//				template:'<h3>这是来自父组件的数据：{{accept}}，这是来自子组件自身的数据:{{value}}</h3>',
+//				data:function(){
+//					return {
+//						value:'拓展性强的组件1'
+//					}
+//				}
+//						
+//				})
+//			)
+			//3.2这种方法注册的组件的拓展性很强
+			Vue.component('new-extend',Vue.extend({
+				props:['accept'],
+				template:'#extend',
+				data:function(){
+					return {
+						value:'拓展性强的组件2'
+					}
+				}
+						
+				})
+			)
+			//实例化Vue
+			var vm=new Vue({
+				el:'.container',
+				data:{
+					arr:['apple','pear','banana','orange'],
+					total:100,
+					letter:'abcde'
+				}
+			})
+//			
+			
+			
+
+		</script>
+	</body>
+</html>
+
+
+

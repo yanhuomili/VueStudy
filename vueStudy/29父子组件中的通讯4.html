@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>vue学习</title>
+		<style type="text/css">
+		</style>
+		
+	</head>
+
+	<body>
+		
+		
+		<div id="app">
+			<button @click="change">我要对儿子说</button>
+			<h1>这是来自父组件的信息：{{faterMsg}}</h1>
+			<h6>我在等待儿子跟我说的话：{{msgFromSon}}</h6>
+			<h6>我在等待儿子跟我说的话：{{msgFromSon2}}</h6>
+			<new-div></new-div><br />
+			<children ref="bbb" :from-parent="giveSon" @children-tell-me="get" @test="abc"></children>
+			
+		</div>
+		
+		<script type="text/x-template" id="box">
+			<div>
+				<h3>{{fromParent}}</h3>
+				<p @click="tellFater">{{sonMsg1}}</p>
+				<p>{{sonMsg2}}</p>
+				<cc ref="ccc"></cc>
+			</div>
+		</script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript">
+			/*子组件向父组件通讯：
+			 * 
+				方法一：this.$emit('children-tell-me',this.sonMsg3);，第一个参数是自定义事件，在组件变迁中绑定该事件，在父组件中定义监听函数
+				2.0版本后，$dispatch（事件由里向外传播：冒泡） 和 $broadcast（事件由外向里传播） 已经被弃用。
+			*/
+		
+		
+			//全局组建的方式声明
+			Vue.component('new-div',{
+				template:'<h1>全局组件</h1>'
+			})
+			var vm = new Vue({
+				el: '#app',
+				data:{
+					faterMsg:'我是爹',
+					giveSon:'这是给儿子的信',
+					sure:1,
+					msgFromSon:'1...',
+					msgFromSon2:'2...',
+				},
+				methods: {
+					get:function(data){
+						console.log('收到儿子的话');
+						this.msgFromSon=data;
+					},
+					change:function(){
+						this.giveSon='我要跟儿子说...';
+						console.log(this.$refs.bbb.$data)
+					},
+					abc:function(data){
+						this.msgFromSon2=data;
+					}
+					
+				},
+				events:{
+					
+				},
+				components:{
+					children:{
+						props:['fromParent'],
+						template:'#box',
+						data:function(){
+							return {
+								sonMsg1:'我是儿子1',
+								sonMsg2:'我是儿子2',
+								sonMsg3:'爸爸，您辛苦了',
+								sonMsg4:'爸爸，您辛苦了2'
+							}
+						},
+						methods:{
+							tellFater:function(){
+								console.log('I will tell somsthing to my fater');
+								this.$emit('children-tell-me',this.sonMsg3);//子组件向父组件传递信息方法一
+								this.$emit('test',this.sonMsg4);//子组件向父组件传递信息方法一
+							}
+						},
+						components:{
+							cc:{
+								template:'<h1>这是孙子组件{{info}}</h1>',
+								data:function(){
+									return {
+										info:11111111111111
+									}
+								}
+							}
+						}
+					}
+				}
+				
+			});
+			var chil=vm.$refs.sunzi
+			console.log(chil)
+		</script>
+	</body>
+
+</html>

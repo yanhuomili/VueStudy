@@ -10,10 +10,17 @@
 	</head>
 	<body>
 		<div id="box">
+			
 			<p @click="change">{{msg}}</p>
 			<p>{{cheng2}}</p>
 			<p>{{chu2}}</p>
+			<input type="text" v-model="msg" />
+			<input type="text" v-model="cheng2" />
+			<input type="text" v-model="chu2" />
 			
+			<br />
+			<button @click="setdata1">设置计算属性1</button>
+			<button @click="setdata2">设置计算属性2</button>
 		</div>
 		<script type="text/javascript">
 			
@@ -23,7 +30,10 @@
 			模板中的数据，并且跟着模板中的数据而改变。
 			 * 
 			 * */
-		
+			
+			Vue.filter('toFixed',function(value){
+				return value.toFixed(3);
+			})
 			//初始化根实例
 			var vm=new Vue({
 				el:'#box',
@@ -31,19 +41,40 @@
 					
 				},
 				data:{
-					msg:10,
+					msg:0,
+				},
+				mounted:function(){
+//					this.msg=this.msg.toFixed(3);
 				},
 				methods:{
 					change:function(){
-						this.msg=20;
+						this.msg=this.msg+10;
+					},
+					setdata1:function(){
+						this.chu2=this.chu2+10;
+					},
+					setdata2:function(){
+						this.cheng2=this.cheng2+50;
 					}
 				},
 				computed:{
-					cheng2:function(){
-						return this.msg1=this.msg*2;
+					cheng2:{
+						get:function(){
+							return this.msg*2;
+						},
+						set:function(v){
+							this.msg=v/2
+						}
+						
 					},
-					chu2:function(){
-						return this.msg2=this.msg/2;
+					chu2:{//计算属性不仅可以获取，还可以设置
+						get:function(){//获取计算属性
+							return this.msg/2;
+						},
+						set:function(v){//设置计算属性
+							this.msg=v*2;
+						}
+						
 					}
 				}
 			})

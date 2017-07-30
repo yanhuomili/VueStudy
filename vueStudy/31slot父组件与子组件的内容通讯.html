@@ -36,11 +36,21 @@
 			<new-div pname='lili'>vue不难学</new-div>
 			<new-div pname='芳芳'>vue其实很简单</new-div>
 			<new-div pname='娜娜'>只要多花点事件，多联系没有什么学不会的</new-div>
-				
+			<em>这是父组件的文字</em>
+			<new-p>
+				<!--<em>这是父组件分发的内容</em>
+				<strong>这也是父组件分发的内容.....</strong>-->
+			</new-p>
+			
 		</div>
 		
-		
-		
+		<script type="text/x-template" id="bb">
+			<div>
+				<p>这是子组件slot里面的内容</p>
+				<slot>这是备用文本，只有当子组件没有内容或者父组件没有分发的时候才会显示</slot>
+			</div>
+			
+		</script>
 		
 		<div class="bb">
 			<div id="1">1</div>
@@ -58,9 +68,12 @@
 			 */
 			Vue.component('new-div',{
 				props:['pname'],
-				template:'<div>你好:{{pname}},'
+				template:'<div><span>你好:{{pname}},</span>'
 				+'<slot></slot>'//slot是在模板中展示父组件的内容
 				+'</div>',
+			});
+			Vue.component('new-p',{
+				template:'#bb'
 			})
 		
 			var vm=new Vue({

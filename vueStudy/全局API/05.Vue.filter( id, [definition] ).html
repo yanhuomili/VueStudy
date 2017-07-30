@@ -15,14 +15,14 @@
 			<ul>
 				<li v-for="(item,index) in arr" @click="change(index)">{{index}}:{{item}}</li>
 			</ul>	
-			<p>{{total|sum}}</p>
+			<p>{{total|doubled|sum}}</p>
 			<div>{{letter|toUpper}}</div>
 		</div>
 		
 		<script type="text/javascript">
 		
 			/*
-			过滤器的使用
+			过滤器的使用,过滤器可以叠加使用，但是要先写局部滤器，在写全局过滤器，调换顺序则不行
 			 */
 			
 			//金额处理过滤器
@@ -40,6 +40,11 @@
 					arr:['apple','pear','banana','orange'],
 					total:100,
 					letter:'abcde'
+				},
+				filters:{//局部过滤器
+					doubled:function(value){
+						return value*2;
+					}
 				}
 			})
 			

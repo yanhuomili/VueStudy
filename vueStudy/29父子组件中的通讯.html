@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>vue学习</title>
+		<style type="text/css">
+			
+		</style>
+		<script type="text/javascript" src="js/vue.js"></script>
+	</head>
+	<body>
+		<div id="app"> 
+			父组件： 
+			<input @keyup="a" v-model="val"><br/> 
+			子组件： 
+			<test0 :test="val"></test0> 
+			<test :test="val"></test> 
+		</div> 
+		<script> 
+		var vm = new Vue({ 
+			el: '#app', 
+			data: { 
+				val: 1 ,
+				msg:100
+			}, 
+			methods:{
+				a:function(){
+					console.log(this.$children[0].test);//获取子组件
+				}
+			},
+			components: { 
+				test0: { 
+					props: ['test'], 
+					template: "<button>第一个子组件</button>", 
+					methods: { 
+						findParent: function () { 
+//							console.log(this.$parent); //访问父组件中的数据
+//							console.log(this.$parent.$data.msg); //访问根组件的val属性 
+//							console.log(this.$parent.$children.indexOf(this)); //查看当前能否在其父组件的子组件中找到索引 
+//							console.log(this.$parent === this.$root); //查看父组件和根组件是不是全等的（因为他的父组件就是根组件） 
+						} 
+					} 
+				},
+				test: { 
+					props: ['test'], 
+					template: "<input @keyup='findParent' v-model='test'/>", 
+					methods: { 
+						findParent: function () { 
+							console.log(this.$parent); //访问父组件中的数据
+							console.log(this.$parent.$data.msg); //访问根组件的val属性 
+							console.log(this.$root.$data.msg); //访问根组件的val属性 
+							console.log(this.$parent.$children.indexOf(this)); //查看当前能否在其父组件的子组件中找到索引 
+							console.log(this.$parent.$children.length); //也可以查看父组件包含子组件的个数
+							console.log(this.$parent === this.$root); //查看父组件和根组件是不是全等的（因为他的父组件就是根组件） 
+						} 
+					} 
+				} 
+			} 
+		}); 
+		</script>
+		
+	</body>
+</html>
+
+

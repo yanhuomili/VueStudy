@@ -13,13 +13,23 @@
 			<p @click="change">{{msg}}</p>
 			<p>{{msg1}}</p>
 			<p>{{msg2}}</p>
-			
+			<input type="text" v-model="msg"/>
+			<input type="text" v-model="msg1"/>
+			<input type="text" v-model="msg2"/>
 		</div>
+		
+		<div id="container">
+			<p @click="single">{{msg}}</p>
+		</div>
+		
+		
 		<script type="text/javascript">
 			
 			/*
 			watch事件类似于onchange事件：当我们的vue初始化之后，在全局中设置一个初始值。
 			要观察data里面的那个属性的变化，watch里面的方法名就要要跟data里面的那个属性名一样。
+			watch属性适合监听原始数据的变化其他数据也跟着变化，但后者的变化不能影响原始数据的变化，也就是说只能实现单向影响。
+			而computed属性就不一样了，它的原始数据可以跟随与它相关的数据的变化而变化，可以实现双向影响。
 			 * 
 			 * */
 		
@@ -48,6 +58,20 @@
 				}
 			})
 			vm.msg=200;
+			
+			
+			
+			var vm=new Vue({
+				data:{
+					msg:123
+				},
+				methods:{
+					single:function(){
+						this.msg=this.msg+10;
+					}
+				}
+			})
+			vm.$mount("#container");//先创建实例，然后利用vm.$mount()方法把实例挂载到相应的dom中。
 		</script>
 	</body>
 </html>

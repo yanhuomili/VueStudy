@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>vue学习</title>
+		<style type="text/css">
+			
+		</style>
+		<script type="text/javascript" src="js/vue.js"></script>
+	</head>
+	<body>
+		<div id="app"> 
+			<div>{{msg}}</div>
+			<button @click="add">增加</button>
+		</div> 
+		<script> 
+		/*1.混合实例的钩子的调用先于组件自身的钩子
+		  2.当组件和混合对象有同名选项时，会合并，如同名钩子函数合并为一个
+		  混合对象钩子函数会在自身组件的钩子函数之前调用。
+		  3.值为对象的选项，如果键名一样，则取组件对象的键值对。如下面methods对象里面的都有tell方法时，取组件自身的键值对，
+		  控制台输出888。
+		  4.在全局中注册了混合对象，那么在之后的所有实例中都可以使用该混合对象。
+		 */
+		
+		
+		
+		var mixin={//混合实例的钩子的调用先于组件自身的钩子
+			created:function(){
+				console.log('2');
+				this.say2();
+			},
+			updated:function(){
+				console.log('更新2');
+			},
+			methods:{
+				say2:function(){
+					console.log('hello2');
+				},
+				tell:function(){
+					console.log('333');
+				}
+				
+			}
+		}
+		
+		
+		Vue.mixin({//在全局中注册混合对象，在之后的所有实例中都可以使用
+			created:function(){
+				var myoption=this.$options.myoption;
+				if(myoption){
+					alert('你已经在全局中注册了该对象');
+					console.log(myoption);
+				}
+			}
+		})
+		
+		
+		var vm = new Vue({ 
+			el: '#app', 
+			created:function(){
+				console.log(1);
+				this.say1();
+			},
+			data: { 
+				val: 1 ,
+				msg:100
+			}, 
+			updated:function(){
+				console.log('更新1');
+			},
+			methods:{
+				add:function(){
+					this.msg=this.msg+1;
+				},
+				say1:function(){
+					console.log('hello1');
+				},
+				tell:function(){
+					console.log('888');
+				}
+			},
+			mixins:[mixin],
+			myoption:'test'
+			
+		}); 
+		</script>
+		
+	</body>
+</html>
+
+

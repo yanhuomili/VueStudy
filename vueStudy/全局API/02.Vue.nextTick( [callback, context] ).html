@@ -34,8 +34,9 @@
 						
 						this.arr[index]='abc';
 						this.$forceUpdate();
-						this.$nextTick(function(){//获取更新后的dom元素
-							console.log($('.container').text());
+						console.log($('.container').text());//在这一步获得的dom元素还没有更新
+						this.$nextTick(function(){//dom更新完后会调用该方法，要获取更新完后的dom,要将函数写在该方法里面
+							console.log($('.container').text());//获取更新后的dom元素
 						})
 					}
 				}

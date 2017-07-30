@@ -24,11 +24,22 @@
 			 */
 			//创建构造器
 			var Profile=Vue.extend({
-				template:'<p>{{msg}}:{{num}}</p>',
+				template:'<p @click="dian">{{msg}}:{{num}}</p>',
 				data:function(){
 					return {
 						msg:'这是构建出来的子类中的data数据',
-						num:1
+						num:10000
+					}
+				},
+				computed:{
+					com:function(){
+						return 123
+					}
+				},
+				methods:{
+					dian:function(){
+						console.log(23);
+						alert(13)
 					}
 				}
 			})
@@ -37,14 +48,16 @@
 			create.$mount('.box');
 			var vm=new Vue({
 				el:'.container',
+				zidingyi:{num:123},//自定义实行，获取的时候使用Vue实例的属性.$options来获取
 				data:{
 					arr:['apple','banana','orange','pear']
 				},
 				methods:{
 					change:function(){
-						create.msg='123';
-						console.log(create.msg);
-						console.log(123)
+						this.arr[0]='bb';
+						this.$forceUpdate();
+						console.log(create.msg)
+						console.log(this.$options.zidingyi.num);//获取自定义属性
 					}
 				}
 			})

@@ -5,10 +5,12 @@
 		<title>jsonp跨域仿百度搜索框</title>
 		<style type="text/css">
 			.active{
-				background: #333;
+				background: #eee;
 				color: blue;
 			}
-			
+			.action{
+				background: greenyellow;
+			}
 		</style>
 	</head>
 	<body>
@@ -23,7 +25,7 @@
 			</ul>-->
 			<br />
 			<ul>
-				<li v-for="(item,index) in mydata" v-bind:class='{active:now==5}' >{{item}}-{{index}}</li>
+				<li v-for="(item,index) in filterData" v-bind:class="{action:index==bgcIndex}" v-bind:class='{active:now==5}' @click="selected(index)">{{item}}-{{index}}</li>
 			</ul>
 			<button @click='add()'>添加</button>
 			<h1 v-if="age==20">20</h1>
@@ -42,7 +44,7 @@
 			 
 			  
 			 */
-			new Vue({
+			var vm=new Vue({
 				el:'#box',
 				data:{
 					a:'active',
@@ -52,13 +54,25 @@
 					now:5,
 					msg:'welcome vue',
 					age:20,
-					arr:[10,11,12,13]
+					arr:[10,11,12,13],
+					limitNum:2,
+					bgcIndex:0
 					
+				},
+				computed:{//计算属性可以用来组分页，可以用来过滤后台请求过来的数组
+					filterData:function(){
+						return this.mydata.slice(0,this.limitNum)
+					}
 				},
 				methods:{
 					add:function(){
-						this.mydata.push('222')
-						console.log(this.now)
+						this.mydata.push('222');
+						console.log(this.now);
+						this.limitNum=this.limitNum+2;
+						if(this.limitNum>=this.mydata.length){
+							this.limitNum=this.mydata.length;
+						}
+						console.log(this.limitNum)
 					},
 					ind:function(index){
 						console.log(index)
@@ -68,6 +82,15 @@
 					},
 					init:function(){//初始化页面
 						this.mydata=[1,2,3,4,5];
+					},
+					selected:function(n){
+						this.bgcIndex=n;
+						var that=this;
+						$.each(this.filterData,function(index,value){
+							if(index==n){
+								that.$set(that.filterData,n,100);//改变数据的时候需要用到set方法
+							}
+						})
 					}
 				},
 				beforeCreate:function(){//在这个阶段是读取不到vue里面的属性和方法，因为在这个阶段vue还没有实例化

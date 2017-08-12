@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>vue路由的学习</title>
+	</head>
+	<body>
+		<div id="app">
+			<p>
+				<!-- 使用 router-link 组件来导航. -->
+    			<!-- 通过传入 `to` 属性指定链接. -->
+    			<!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
+    			<router-link to="/user/foo007">Go to Foo</router-link>
+   				<router-link to="/user/bar008">Go to Bar</router-link>
+   				<router-link to="/user/apple009">Go to apple</router-link>
+   				<router-link to="/user/pear010">Go to pear</router-link>
+   				<router-link to="/user/banana011">Go to banana</router-link>
+			</p>
+			<!-- 路由出口 -->
+			<!-- 路由匹配到的组件将渲染在这里 -->
+			<router-view></router-view>
+		</div>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/vue-router.js"></script>
+		<script type="text/javascript">
+			// 2. 定义路由
+			// 每个路由应该映射一个组件。 其中"component" 可以是
+			// 通过 Vue.extend() 创建的组件构造器，
+			// 或者，只是一个组件配置对象。
+			// 我们晚点再讨论嵌套路由。
+			const User = {//匹配到的路由全部映射到同一个组件中,原来的组件实例会被复用，显得高效，组件的生命周期钩子不会被调用
+				  template: '<div><h1>这是{{ $route.params.id }}页面</h1><p>这是{{ $route.params.id }}页面下的p标签</p></div>',
+				  watch:{//监听路由的切换，在切换路由的时候可以做出相应的响应
+				    '$route' (to, from) {
+				      // 对路由变化作出响应...
+				      console.log('路由切换了')
+				    }
+				  }
+				}
+				
+			// 3. 创建 router 实例，然后传 `routes` 配置
+			// 你还可以传别的配置参数, 不过先这么简单着吧。
+			const router = new VueRouter({
+			  routes: [
+			    { path: '/user/:id', component: User }
+			  ]
+			})
+			
+			
+			// 4. 创建和挂载根实例。
+			// 记得要通过 router 配置参数注入路由，
+			// 从而让整个应用都有路由功能
+			const app = new Vue({
+			  router
+			}).$mount('#app')
+			
+			// 现在，应用已经启动了！
+			
+		</script>
+	</body>
+</html>

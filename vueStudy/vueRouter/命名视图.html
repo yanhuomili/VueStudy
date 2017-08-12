@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>vue路由的学习</title>
+		<style type="text/css">
+			.outer{
+				margin-top: 50px;
+			}
+			.outer div{
+				margin: 10px 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app">
+			<h1>Named Views</h1>
+			<ul>
+				<li>
+					<router-link to="/">news</router-link>
+				</li>
+				<li>
+					<router-link to="/other">about</router-link>
+				</li>
+			</ul>
+			<div class="outer">
+				<router-view class="view one"></router-view>
+				<router-view class="view two" name="a"></router-view>
+				<router-view class="view three" name="b"></router-view>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/vue-router.js"></script>
+		<script type="text/javascript">
+			const Foo = {
+				template: '<div>1.这是foo组件</div>'
+			}
+			const Bar = {
+				template: '<div>2.这是bar组件</div>'
+			}
+			const Baz = {
+				template: '<div>3.这是baz组件</div>'
+			}
+
+			const router = new VueRouter({
+				mode: 'history',
+				routes: [{
+					path: '/',
+					// a single route can define multiple named components
+					// which will be rendered into <router-view>s with corresponding names.
+					components: {
+						default: Foo,
+						a: Bar,
+						b: Baz
+					}
+				}, {
+					path: '/other',
+					components: {
+						default: Baz,
+						a: Bar,
+						b: Foo
+					}
+				}]
+			})
+
+			new Vue({
+				router,
+				el: '#app'
+			})
+		</script>
+	</body>
+
+</html>
